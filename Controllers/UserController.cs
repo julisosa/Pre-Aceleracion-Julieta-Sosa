@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Pre_Aceleracion_Julieta_Sosa.Interfaces;
 using Pre_Aceleracion_Julieta_Sosa.Models;
 using System;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace Pre_Aceleracion_Julieta_Sosa.Controllers
     public class UserController : ControllerBase
     {
         ChallengeContext _context;
+        private readonly IMailService _mailService;
 
-        public UserController(ChallengeContext context)
+        public UserController(ChallengeContext context, IMailService mailService)
         {
             _context = context;
+            _mailService = mailService;
         }
 
         [HttpGet]
@@ -84,6 +87,15 @@ namespace Pre_Aceleracion_Julieta_Sosa.Controllers
             {
                 return BadRequest(e.Message);
             }
+        }
+
+        [HttpGet]
+        [Route("sendmail")]
+        public async Task<IActionResult> SendMail()
+        {
+
+            await _mailService.SendMail("julisoad15@gmail.com", "Pre-Aceleracion", "<h1>Este es el cuerpo del correo</h1>");
+            return Ok();
         }
 
     }

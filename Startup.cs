@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Pre_Aceleracion_Julieta_Sosa.Interfaces;
 using Pre_Aceleracion_Julieta_Sosa.Models;
 using Pre_Aceleracion_Julieta_Sosa.Repositories;
+using Pre_Aceleracion_Julieta_Sosa.Services;
 using System.Text;
 
 namespace Pre_Aceleracion_Julieta_Sosa
@@ -29,6 +30,7 @@ namespace Pre_Aceleracion_Julieta_Sosa
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
             services.AddDbContext<ChallengeContext>();
+            services.AddTransient<IMailService, MailService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAuthentication(options =>
             {
