@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Pre_Aceleracion_Julieta_Sosa.Interfaces;
 using Pre_Aceleracion_Julieta_Sosa.Models;
 using Pre_Aceleracion_Julieta_Sosa.Repositories;
@@ -31,6 +32,10 @@ namespace Pre_Aceleracion_Julieta_Sosa
             );
             services.AddDbContext<ChallengeContext>();
             services.AddTransient<IMailService, MailService>();
+            services.AddSwaggerGen(doc =>
+            {
+                doc.SwaggerDoc("v1", new OpenApiInfo { Title = "Pre-Aceleracion API", Version = "v1" });
+            });
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAuthentication(options =>
             {
@@ -61,6 +66,13 @@ namespace Pre_Aceleracion_Julieta_Sosa
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Pre-Aceleracion API");
+                options.RoutePrefix = "swagger";
+            });
 
             app.UseRouting();
 

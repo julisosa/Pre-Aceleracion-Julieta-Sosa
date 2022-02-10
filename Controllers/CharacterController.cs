@@ -19,6 +19,10 @@ namespace Pre_Aceleracion_Julieta_Sosa.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// Create character
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Get()
         {
